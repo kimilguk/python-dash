@@ -40,6 +40,6 @@ app.layout = html.Div(children=[
 ])
 
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8050)
-    #app.run_server(debug=True)
-    #실행 명령: python app.py
+    app.run_server(debug=True, host='0.0.0.0', port=8888)
+    #app.run_server(debug=True) # 보통 기본 포트는 8050 이다. 보통 host는 외부허용 공공ip 를 말한다.
+    #실행 명령: python index.py
