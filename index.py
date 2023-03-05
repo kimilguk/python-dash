@@ -13,8 +13,12 @@ import plotly.express as px
 import pandas as pd
 # CDN(Contents Delivery Network)으로 외부 CSS 불러오기
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+import dash_bootstrap_components as dbc # 부트 스트랩 디자인 사용
+# BS = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+# BS = './data/bootstrap.min.css'
+app = dash.Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP,
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+# app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
@@ -27,6 +31,7 @@ df = pd.DataFrame({
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
 app.layout = html.Div(children=[
+    dbc.Button("다운로드", color="primary", className="me-1", id="btn-download"),
     html.H1(children='헬로 Dash'),
 
     html.Div(children='''
