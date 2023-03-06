@@ -1,3 +1,4 @@
+# %matplotlib inline
 # %%writefile ./data/stock_info_app.py
 # %%writefile C:\myPyScraping\code\ch09\stock_info_app.py
 # 주식 데이터를 가져오는 웹 앱
@@ -57,25 +58,35 @@ print(df.head())
 from matplotlib import font_manager as fm
 font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
 font_prop = fm.FontProperties(fname=font_path)
+font_name = fm.FontProperties(fname=font_path).get_name() # 한글이 깨져 보일 때는. 아래 작업 후 반드시 주피터 노트북을 재 실핸 한다.
+# print(matplotlib.get_cachedir()) # 폰트 캐시 위치, 만약 한글이 깨져 보이면 이 폴더 내를 지운다.rm -rf ~/.cache/matplotlib/*
+
 # matplotlib을 이용한 그래프 그리기
-matplotlib.rcParams['font.family'] = 'NanumGothic' # 기본은 sans-serif로 전역 설정됨
+matplotlib.rcParams['font.family'] = font_name # 'NanumGothic' 기본은 sans-serif로 전역 설정됨
 matplotlib.rcParams['axes.unicode_minus'] = False # 마이너스(-) 폰트 깨짐 방지
 # Axes : 보통 plot으로 생각하는 하나의 그래프. 각각의 Axes는 개별적으로 제목 및 x/y 레이블을 가질 수 있다.
 # Axis : 번역하면 '축'인데, 그려지는 축을 말하는 것이 아니라 정확히는 x, y 의 제한 범위를 말한다
 # pyplog로 간단하게 그래프 그리기
-ax = df['Close'].plot(grid=True, figsize=(15, 5)) #여기서는 Axes 출력
-ax.set_title("주가(종가) 그래프", fontsize=30, fontproperties=font_prop) # 그래프 제목을 지정
-ax.set_xlabel("기간", fontsize=20, fontproperties=font_prop)             # x축 라벨을 지정
-ax.set_ylabel("주가(원)", fontsize=20, fontproperties=font_prop)         # y축 라벨을 지정
+print(df.columns) #현재 컬럼명 확인
+selected_columns = ['Open', 'Close'] # 관심있는 열만 선택
+df2 = df[selected_columns].copy()     # 선택한 열만 다른 DataFrame으로 복사
+df2.reset_index(inplace=True) # 기존 Data 인덱스가 컬럼으로 변경된다.
+print(df2.columns) #현재 컬럼명 확인
+df2.columns = ['등록일', '주가(시작가)', '주가(종가)'] # 컬럼명 한글로 변경
+# ax = df['Close'].plot(grid=True, figsize=(15, 5)) #여기서는 Axes 출력
+ax = df2.plot(x='등록일', y=['주가(시작가)', '주가(종가)'],grid=True, figsize=(15, 5)) 
+ax.set_title("주가(종가) 그래프", fontsize=30) # 그래프 제목을 지정 , fontproperties=font_prop
+ax.set_xlabel("기간", fontsize=20)             # x축 라벨을 지정 , fontproperties=font_prop
+ax.set_ylabel("주가(원)", fontsize=20)         # y축 라벨을 지정 , fontproperties=font_prop
 plt.xticks(fontsize=15)                        # X축 눈금값의 폰트 크기 지정
 plt.yticks(fontsize=15)                        # Y축 눈금값의 폰트 크기 지정    
-print(type(ax.get_figure()))
+# display(type(ax.get_figure()))
 # display(df['Close'].index)
 plt.show()
 
+# 2개의 선 그래프 출력
 import plotly.offline as pyo
 import plotly.graph_objs as go
-# 2개의 선 그래프
 trace1 = go.Scatter(x=df['Open'].index, y=df['Open'], name = '시작가')
 trace2 = go.Scatter(x=df['Close'].index, y=df['Close'], name = '종가')
 # pyo.iplot([trace1,trace2])
@@ -101,16 +112,14 @@ import dash_bootstrap_components as dbc # 부트 스트랩 디자인 사용
 from dash.dash_table.Format import Format, Group # , type:'numeric', format:Format(group=True, groups=[4])
 
 # fig = px.line(df['Close'], title="주가(종가) 그래프")
-BS = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-# BS = './data/bootstrap.min.css'
-app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP,
+# BS = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+# BS = app.get_asset_url('bootstrap.min.css') # 노트북에서는 상대경로는 않된다. 대신 py파일이 있는 폴더에서 assets 이란 폴더를 생성한 후 css를 넣는다.
+# app.get_asset_url() 관련정보 https://dash.plotly.com/dash-enterprise/static-assets
+# 실행 결과 assets 폴더에 저장된 CSS는 위 함수 없이도 앱에서 자동으로 읽어 들인다.
+app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
+#Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
 app.title = "주식 정보를 가져오는 웹 앱"
-
-col_names = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-# app = Dash(__name__) #Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
 # app layout: html과 dcc 모듈을 이용
-app.title = "주식 정보를 가져오는 웹 앱"
-# app.layout = dbc.Container([
 app.layout = html.Div(children=[
     # Dash HTML Components module로 HTML 작성 
     html.H1(children='주식 정보를 가져오는 웹 앱'),
@@ -136,7 +145,7 @@ app.layout = html.Div(children=[
             date=str(date.today())
         ),
 # 부트 스트랩 디자인 버튼 기술참조: https://dash-bootstrap-components.opensource.faculty.ai/docs/components/button/
-        dbc.Button("다운로드", color="primary", className="me-1", id="btn-download"),
+        dbc.Button("데이터 다운로드", color="primary", className="me-1", id="btn-download"),
 #         html.Button("다운로드", id="btn-download"),
         dcc.Download(id="download-data"),
     ], style={'display':'inline-block'}),
@@ -213,7 +222,11 @@ def update_output(start_date_value, end_date_value):
         end_date = end_date_object.strftime('%Y-%m-%d')
         # 여기에 figure 객체 생성
         df = yf.download(ticker_symbol, start=start_date, end=end_date)
-        fig = px.line(df['Close'], title="주가(종가) 그래프")
+        selected_columns = ['Open', 'Close'] # 관심있는 열만 선택
+        df2 = df[selected_columns].copy()     # 선택한 열만 다른 DataFrame으로 복사
+        df2.columns = ['주가(시작가)', '주가(종가)'] # 컬럼명 한글로 변경
+        fig = px.line(df2, title="주가(종가) 그래프", labels={"variable": "분류"})
+#         fig = px.line(df['Close'], title="주가(종가) 그래프") # 단일 값 출력
         fig.update_layout(xaxis_title="기간", yaxis_title="주가(원)",title_text="주가(종가)그래프"+start_date+" ~ "+end_date, title_font_size=20)
         return (fig)
 # 그래프 2개 출력(아래)
