@@ -1,5 +1,11 @@
 import dash # 멀티 파일로 실행 할 때 위 아래 줄 주석 해제
-dash.register_page(__name__, path='/')
+dash.register_page(
+    __name__,
+    title='부동산 정보를 가져오는 웹 앱',
+    path='/',
+    description='부동산 정보를 가져오는 웹 앱',
+    css_key='btn-warning'
+)
 # 단일 파일로 실행하지 않고, 멀티 파일로 저장할 경우 제일 하단 서버실행은 주석처리한다.
 # %%writefile C:\myPyScraping\code\ch09\land_info_app.py
 # 부동산 데이터를 가져오는 웹 앱
@@ -76,7 +82,7 @@ app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사�
 app.title = "부동산 정보를 가져오는 웹 앱"
 # app.layout = html.Div([ # 단일 파일로 실행할 때
 layout = html.Div([ # 멀티 파일로 실행할 때
-    html.H1(children='부동산 정보를 가져오는 웹 앱'),
+    html.H2(children='부동산 정보를 가져오는 웹 앱'),
     html.Div([
         dcc.Checklist(
             options=selected_regions,
@@ -93,10 +99,13 @@ layout = html.Div([ # 멀티 파일로 실행할 때
         )
     ]),
     html.Div(id='dd-output-container'),
+    html.Div([
+        dcc.Loading(id="loading-1", type="default", children=html.Div(id="loading-output-2")),
+    ],style={'position':'fixed','left':'50%','top':'50%','z-index':'9999'}),
 ])
 # 아래 콜백 함수에서 항상 Output 이 먼저 와야 한다.
 @callback(
-    [Output(component_id='update_graph', component_property='figure'),Output('dd-output-container', 'children')],
+    [Output(component_id='update_graph', component_property='figure'),Output('dd-output-container', 'children'),Output('loading-output-2', 'children')],
     Input('demo-check', 'value'),
 )
 # update_output 는 콜백으로 자동실행된다.
@@ -105,7 +114,7 @@ def update_output(value):
         fig = px.line(df_rates_for_chart[value], title="아파트의 매매가 변화율", labels={"variable": "분류"}) # 단일 값 출력
         fig.update_layout(xaxis_title="날짜", yaxis_title="변화율(%)"
                   , title_font_size=30, xaxis_title_font_size=20, yaxis_title_font_size=20)
-        return (fig, f'You have selected {value}')
+        return fig, f'You have selected {value}', ''
 
 # if __name__ == '__main__': #파이썬 파일이 메인 프로그램으로 사용될 때와 모듈로 사용될 때를 구분하기 위한 용도
 #     app.run_server(debug=False, host='0.0.0.0', port=8888) # 단일 파일로 실행 할 때
