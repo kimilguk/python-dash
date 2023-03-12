@@ -100,7 +100,7 @@ layout = html.Div([ # 멀티 파일로 실행할 때
     ]),
     html.Div(id='dd-output-container'),
     html.Div([
-        dcc.Loading(id="loading-1", type="default", children=html.Div(id="loading-output-2")),
+        dcc.Loading(id="loading-2", type="default", children=html.Div(id="loading-output-2")),
     ],style={'position':'fixed','left':'50%','top':'50%','z-index':'9999'}),
 ])
 # 아래 콜백 함수에서 항상 Output 이 먼저 와야 한다.

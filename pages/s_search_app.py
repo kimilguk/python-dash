@@ -40,7 +40,7 @@ def get_gnews(query):
     selected_columns = ['title', 'published', 'link'] # 관심있는 열만 선택
     df_gnews2 = df_gnews[selected_columns].copy()     # 선택한 열만 다른 DataFrame으로 복사
     # published 열의 작성 일시를 한국 시간대로 변경
-    df_gnews2['published'] = df_gnews2['published'].apply(get_local_datetime) 
+    df_gnews2['published'] = df_gnews2['published'].apply(get_local_datetime)
     df_gnews2.columns = ['제목', '제공 일시', '링크'] # 열 이름 변경
     return title, updated_KST, df_gnews2
 #---------------------------------------------------------
@@ -69,12 +69,14 @@ def create_gnews_html_code(title, updated_KST, df):
 query = "인공지능%20머신러닝"
 [title_gnews, updated_KST_gnews, df_gnews] = get_gnews(query)
 # display(df_gnews.head()) # [Google](https://www.google.com)
+
 # 링크 액션 작동하게 처리
 df_gnews['링크']=df_gnews['링크'].map('[링크]({})'.format) #html.A(html.P('Link'),href="yahoo.com")
 # 긴 제목 기사 줄여서 표시하기: 위 처럼 1줄로 되지 않아서 아래로 처리
 for i in df_gnews.columns[0:1]:
     df_gnews[i] = df_gnews[i].str[:60]+'...'
-# print(df_gnews.head()) # ![Plotly](
+
+print(df_gnews.head()) # ![Plotly](
 # 웹 앱에 표시할 HTML 테이블 생성 (DataFrame 데이터 중 처음 일부만 HTML 테이블로 생성)
 html_table = df_gnews.head().to_html(justify='center', escape=False, render_links=True)
 # HTML 파일 다운로드를 위한 HTML code 생성
@@ -122,10 +124,10 @@ layout = dbc.Container([ # 멀티 파일로 실행 할 때
 ])
 
 @callback (
-    [Output('tbl', 'data'),Output('errors', 'children'),Output('loading-output-1', 'children')],
+    [Output('tbl', 'data'),Output('errors', 'children'),Output("loading-output-1", "children")],
     [Input('input_search', 'value'), Input("btn_search", "n_clicks")],
     [State('tbl', 'data'), State('tbl', 'columns')], # 기존 값 가져오기
-    # prevent_initial_call=True, # 페이지 로드 시 콜백이 실행되지 않도록 
+#     prevent_initial_call=True, # 페이지 로드 시 콜백이 실행되지 않도록 
 )
 def update_table(value, n_clicks, data, columns):
     changed_id = [p['prop_id'] for p in callback_context.triggered][0] # 클릭,상태변경 이벤트 확인용 변수
