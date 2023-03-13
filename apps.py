@@ -3,13 +3,15 @@ from dash import Dash, html, dcc, Input, Output, callback, State
 import dash
 import dash_bootstrap_components as dbc # 부트 스트랩 디자인 사용
 import time
+from pathlib import Path
+THIS_FOLDER = Path(__file__).parent.resolve()
 BS = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/styles/tomorrow-night-eighties.min.css"
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, BS], use_pages=True)
 app.title = '파이썬 웹 스크래핑과 반응형 대시보드 앱 만들기'
 app.layout = html.Div(children=[
     html.H1(html.A('파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기', href="/",style={'color': 'blue', 'text-decoration': 'none'})),
-    html.H2("원격URL로 가져오는 앱은 PythonAnywhere 클라우드에서 당분간 403 권한 없음 때문에 작동하지 않습니다."),
+    html.H4("원격URL로 가져오는 앱은 PythonAnywhere 클라우드에서 당분간 403 권한 없음 때문에 작동하지 않습니다."),
     # 부트스트랩 버튼 클래스 이름 정보 https://getbootstrap.com/docs/4.0/components/buttons/
     # 플로틀리 dash.register_page 정보: https://github.com/plotly/dash-multi-page-app-plugin
     dbc.Col(
@@ -45,6 +47,7 @@ app.layout = html.Div(children=[
         dcc.Loading(id="loading", type="default", children=html.Div(id="loading-output")),
     ],style={'position':'fixed','left':'50%','top':'50%','width':'100%','height':'100%'}),
 ])
+
 # 현재 페이지의 파이썬 소스 확인
 @app.callback(
     Output('source_code', 'children'),
@@ -56,7 +59,7 @@ def display_source(pathname):
         if pathname == page["path"]:
             if pathname == '/':
                 pathname = '/dash_app'
-            with open(f'./pages{pathname}.py') as file_data:
+            with open(f'{THIS_FOLDER}/pages{pathname}.py') as file_data:
                 # 기본적으로 사용하는 함수를  with문 안에 사용하면 되며
                 # with문을 나올 때 close를 자동으로 불러줍니다.
                 source = file_data.read()
