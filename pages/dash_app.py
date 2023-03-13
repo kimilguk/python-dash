@@ -42,19 +42,22 @@ layout = html.Div(children=[ # 다중 파일 실행 시
         dcc.Graph(
             id='update_graph1'
         )
-    ])
+    ]),
+    html.Div([
+        dcc.Loading(id="loading-4", type="default", children=html.Div(id="loading-output-4")),
+    ],style={'position':'fixed','left':'50%','top':'50%','z-index':'9999'}),
 ])
 
 @callback(
-    Output(component_id='update_graph1', component_property='figure'),
+    [Output(component_id='update_graph1', component_property='figure'),Output('loading-output-4', 'children')],
     Input(component_id='xvar_name', component_property='value'),
     Input('yvar_name', 'value')
 )
 def update_graphs(xvar, yvar):
     # 여기에 figure 객체 생성
     fig = px.scatter(df, x=xvar, y=yvar, color="species", width=1000, height=700)
-    fig.update_layout(title_text="스캐터 Plot of"+xvar+" vs "+yvar, title_font_size=30)
-    return fig
+    fig.update_layout(title_text="스캐터(산점도) of"+xvar+" vs "+yvar, title_font_size=30)
+    return fig, ''
 
 # if __name__ == '__main__': #파이썬 파일이 메인 프로그램으로 사용될 때와 모듈로 사용될 때를 구분하기 위한 용도
 #     app.run_server(debug=False, host='0.0.0.0', port=8888)
