@@ -12,8 +12,8 @@ dash.register_page(
 import pandas as pd
 import yfinance as yf
 import datetime
-import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib.pyplot as plt
+# import matplotlib
 from io import BytesIO
 
 #----------------------------------------
@@ -62,15 +62,15 @@ end_date = "2022-01-31"
 # df = ticker_data.history(start='2022-06-13', end='2022-06-18') # 시작일과 종료일 지정
 df = yf.download(ticker_symbol, start=start_date, end=end_date)
 print(df.head())
-from matplotlib import font_manager as fm
-font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
-font_prop = fm.FontProperties(fname=font_path)
-font_name = fm.FontProperties(fname=font_path).get_name() # 한글이 깨져 보일 때는. 아래 작업 후 반드시 주피터 노트북을 재 실핸 한다.
-# print(matplotlib.get_cachedir()) # 폰트 캐시 위치, 만약 한글이 깨져 보이면 이 폴더 내를 지운다.rm -rf ~/.cache/matplotlib/*
+# from matplotlib import font_manager as fm
+# font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
+# font_prop = fm.FontProperties(fname=font_path)
+# font_name = fm.FontProperties(fname=font_path).get_name() # 한글이 깨져 보일 때는. 아래 작업 후 반드시 주피터 노트북을 재 실핸 한다.
+# # print(matplotlib.get_cachedir()) # 폰트 캐시 위치, 만약 한글이 깨져 보이면 이 폴더 내를 지운다.rm -rf ~/.cache/matplotlib/*
 
-# matplotlib을 이용한 그래프 그리기
-matplotlib.rcParams['font.family'] = font_name # 'NanumGothic' 기본은 sans-serif로 전역 설정됨
-matplotlib.rcParams['axes.unicode_minus'] = False # 마이너스(-) 폰트 깨짐 방지
+# # matplotlib을 이용한 그래프 그리기
+# matplotlib.rcParams['font.family'] = font_name # 'NanumGothic' 기본은 sans-serif로 전역 설정됨
+# matplotlib.rcParams['axes.unicode_minus'] = False # 마이너스(-) 폰트 깨짐 방지
 # Axes : 보통 plot으로 생각하는 하나의 그래프. 각각의 Axes는 개별적으로 제목 및 x/y 레이블을 가질 수 있다.
 # Axis : 번역하면 '축'인데, 그려지는 축을 말하는 것이 아니라 정확히는 x, y 의 제한 범위를 말한다
 # pyplog로 간단하게 그래프 그리기
@@ -80,16 +80,16 @@ df2 = df[selected_columns].copy()     # 선택한 열만 다른 DataFrame으로 
 df2.reset_index(inplace=True) # 기존 Data 인덱스가 컬럼으로 변경된다.
 print(df2.columns) #현재 컬럼명 확인
 df2.columns = ['등록일', '주가(시작가)', '주가(종가)'] # 컬럼명 한글로 변경
-# ax = df['Close'].plot(grid=True, figsize=(15, 5)) #여기서는 Axes 출력
-ax = df2.plot(x='등록일', y=['주가(시작가)', '주가(종가)'],grid=True, figsize=(15, 5)) 
-ax.set_title("주가(종가) 그래프", fontsize=30) # 그래프 제목을 지정 , fontproperties=font_prop
-ax.set_xlabel("기간", fontsize=20)             # x축 라벨을 지정 , fontproperties=font_prop
-ax.set_ylabel("주가(원)", fontsize=20)         # y축 라벨을 지정 , fontproperties=font_prop
-plt.xticks(fontsize=15)                        # X축 눈금값의 폰트 크기 지정
-plt.yticks(fontsize=15)                        # Y축 눈금값의 폰트 크기 지정    
-# display(type(ax.get_figure()))
-# display(df['Close'].index)
-plt.show()
+# # ax = df['Close'].plot(grid=True, figsize=(15, 5)) #여기서는 Axes 출력
+# ax = df2.plot(x='등록일', y=['주가(시작가)', '주가(종가)'],grid=True, figsize=(15, 5)) 
+# ax.set_title("주가(종가) 그래프", fontsize=30) # 그래프 제목을 지정 , fontproperties=font_prop
+# ax.set_xlabel("기간", fontsize=20)             # x축 라벨을 지정 , fontproperties=font_prop
+# ax.set_ylabel("주가(원)", fontsize=20)         # y축 라벨을 지정 , fontproperties=font_prop
+# plt.xticks(fontsize=15)                        # X축 눈금값의 폰트 크기 지정
+# plt.yticks(fontsize=15)                        # Y축 눈금값의 폰트 크기 지정    
+# # display(type(ax.get_figure()))
+# # display(df['Close'].index)
+# plt.show()
 
 # 2개의 선 그래프 출력: 플로틀리 모듈을 사용하면, matplotlab 모듈보다 인터렉티브(대화형) 하게 그래프를 조작할 수 있다.
 import plotly.offline as pyo

@@ -11,8 +11,8 @@ dash.register_page(
 import pandas as pd
 import datetime
 import time
-import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib.pyplot as plt
+# import matplotlib
 from io import BytesIO
 
 # -----------------------------------------------------------------------------
@@ -63,21 +63,21 @@ df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%
 # display(df_exchange_rate.tail())  # 환율 데이터 표시(앞의 일부만 표시)
 # display(df_exchange_rate2.head())  # 환율 데이터 표시(앞의 일부만 표시)
 
-# # 2) 차트 그리기
-# matplotlib을 이용한 그래프에 한글을 표시하기 위한 설정
-matplotlib.rcParams['font.family'] = 'NanumGothic'
-matplotlib.rcParams['axes.unicode_minus'] = False
+# # # 2) 차트 그리기
+# # matplotlib을 이용한 그래프에 한글을 표시하기 위한 설정
+# matplotlib.rcParams['font.family'] = 'NanumGothic'
+# matplotlib.rcParams['axes.unicode_minus'] = False
 
-# # 선 그래프 그리기 (df_exchange_rate2 이용)
-ax = df_exchange_rate2['매매기준율'].plot(grid=True, figsize=(15, 5))
-ax.set_title("환율(매매기준율) 그래프", fontsize=30) # 그래프 제목을 지정
-ax.set_xlabel("기간", fontsize=20)                   # x축 라벨을 지정
-ax.set_ylabel(f"원화/{currency_name}", fontsize=20)  # y축 라벨을 지정
-plt.xticks(fontsize=15)             # X축 눈금값의 폰트 크기 지정
-plt.yticks(fontsize=15)             # Y축 눈금값의 폰트 크기 지정
-plt.show()
-# display(type(ax.get_figure()))
-# fig = ax.get_figure()               # fig 객체 가져오기 dsah 에서 에러나서 하단의 fig로 교체
+# # # 선 그래프 그리기 (df_exchange_rate2 이용)
+# ax = df_exchange_rate2['매매기준율'].plot(grid=True, figsize=(15, 5))
+# ax.set_title("환율(매매기준율) 그래프", fontsize=30) # 그래프 제목을 지정
+# ax.set_xlabel("기간", fontsize=20)                   # x축 라벨을 지정
+# ax.set_ylabel(f"원화/{currency_name}", fontsize=20)  # y축 라벨을 지정
+# plt.xticks(fontsize=15)             # X축 눈금값의 폰트 크기 지정
+# plt.yticks(fontsize=15)             # Y축 눈금값의 폰트 크기 지정
+# plt.show()
+# # display(type(ax.get_figure()))
+# # fig = ax.get_figure()               # fig 객체 가져오기 dsah 에서 에러나서 하단의 fig로 교체
 
 #----------------------------------------------------
 # 대시보드 앱 시작(아래) 

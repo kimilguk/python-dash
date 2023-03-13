@@ -10,8 +10,8 @@ dash.register_page(
 # %%writefile C:\myPyScraping\code\ch09\land_info_app.py
 # 부동산 데이터를 가져오는 웹 앱
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib
+# import matplotlib.pyplot as plt
+# import matplotlib
 
 # 원본 DataFrame의 제목 열에 있는 문자열을 분리해
 # 전국, 서울, 수도권의 매매가 변화율 열이 있는 DataFrame 반환하는 함수
@@ -44,19 +44,19 @@ for page_num in range(1, last_page_num+1):
 df_rates_for_chart = df_rates[::-1].reset_index(drop=True)
 print(df_rates_for_chart.head())
 selected_regions = ['전국','서울','수도권']
-# 차트 그리기
-# matplotlib을 이용한 그래프에 한글을 표시하기 위한 설정
-matplotlib.rcParams['font.family'] = 'NanumGothic'
-matplotlib.rcParams['axes.unicode_minus'] = False
-# 선 그래프 그리기 -o 사용
-ax = df_rates_for_chart.plot(x='등록일', y=selected_regions, figsize=(15, 6),
-                             style = '-o', grid=True) # 그래프 그리기
-ax.set_title("아파트 매매가 변화율", fontsize=30) # 그래프 제목을 지정
-ax.set_xlabel("날짜", fontsize=20)                # x축 라벨을 지정
-ax.set_ylabel("변화율(%)", fontsize=20)           # y축 라벨을 지정
-plt.xticks(fontsize=15)             # X축 눈금값의 폰트 크기 지정
-plt.yticks(fontsize=15)             # Y축 눈금값의 폰트 크기 지정
-plt.show()
+# # 차트 그리기
+# # matplotlib을 이용한 그래프에 한글을 표시하기 위한 설정
+# matplotlib.rcParams['font.family'] = 'NanumGothic'
+# matplotlib.rcParams['axes.unicode_minus'] = False
+# # 선 그래프 그리기 -o 사용
+# ax = df_rates_for_chart.plot(x='등록일', y=selected_regions, figsize=(15, 6),
+#                              style = '-o', grid=True) # 그래프 그리기
+# ax.set_title("아파트 매매가 변화율", fontsize=30) # 그래프 제목을 지정
+# ax.set_xlabel("날짜", fontsize=20)                # x축 라벨을 지정
+# ax.set_ylabel("변화율(%)", fontsize=20)           # y축 라벨을 지정
+# plt.xticks(fontsize=15)             # X축 눈금값의 폰트 크기 지정
+# plt.yticks(fontsize=15)             # Y축 눈금값의 폰트 크기 지정
+# plt.show()
 
 # display(type(ax.get_figure()))
 # fig = ax.get_figure()               # fig 객체 가져오기 dsah 에서 에러나서 하단의 fig로 교체

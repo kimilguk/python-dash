@@ -13,7 +13,7 @@ dash.register_page(
 from datetime import datetime, timedelta
 import pandas as pd
 import feedparser
-from IPython.display import HTML
+# from IPython.display import HTML
 
 # RSS 피드 제공 일시를 한국 날짜와 시간으로 변경하는 함수
 def get_local_datetime(rss_datetime):    
