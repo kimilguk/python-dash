@@ -2,7 +2,7 @@ import dash # 멀티 파일로 실행 할 때 위 아래 줄 주석 해제
 dash.register_page(
     __name__,
     title='콜백 Dash 연습 웹 앱',
-    path='/dash_app',
+    path='/',
     description='콜백 Dash 연습 웹 앱',
     css_key='btn-success'
 )

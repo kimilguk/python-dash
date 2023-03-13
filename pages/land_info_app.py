@@ -2,7 +2,7 @@ import dash # 멀티 파일로 실행 할 때 위 아래 줄 주석 해제
 dash.register_page(
     __name__,
     title='부동산 정보를 가져오는 웹 앱',
-    path='/',
+    path='/land_info_app',
     description='부동산 정보를 가져오는 웹 앱',
     css_key='btn-warning'
 )

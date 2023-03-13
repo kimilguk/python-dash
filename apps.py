@@ -9,6 +9,7 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, BS], use_pages=
 app.title = '파이썬 웹 스크래핑과 반응형 대시보드 앱 만들기'
 app.layout = html.Div(children=[
     html.H1(html.A('파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기', href="/",style={'color': 'blue', 'text-decoration': 'none'})),
+    html.H2("원격URL로 가져오는 앱은 PythonAnywhere 클라우드에서 당분간 403 권한 없음 때문에 작동하지 않습니다."),
     # 부트스트랩 버튼 클래스 이름 정보 https://getbootstrap.com/docs/4.0/components/buttons/
     # 플로틀리 dash.register_page 정보: https://github.com/plotly/dash-multi-page-app-plugin
     dbc.Col(
@@ -54,7 +55,7 @@ def display_source(pathname):
         print(pathname)
         if pathname == page["path"]:
             if pathname == '/':
-                pathname = '/land_info_app'
+                pathname = '/dsah_app'
             with open(f'./pages{pathname}.py') as file_data:
                 # 기본적으로 사용하는 함수를  with문 안에 사용하면 되며
                 # with문을 나올 때 close를 자동으로 불러줍니다.
