@@ -90,7 +90,7 @@ import dash_bootstrap_components as dbc # 부트 스트랩 디자인 사용
 from dash.dash_table.Format import Format, Group # , type:'numeric', format:Format(group=True, groups=[4])
 from dash.exceptions import PreventUpdate
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용
+app = Dash('s_search_app',external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용
 app.title = '구글 뉴스 기사를 검색하는 웹 앱'
 layout = dbc.Container([ # 멀티 파일로 실행 할 때
 # app.layout = dbc.Container([ # 단일 파일로 실행 할 때

@@ -15,7 +15,7 @@ print(df) #sepal(꽃받침)과 petal(꽃잎)의 길이,너비 크기로 setosa, 
 # plotly를 이용한 산점도(스캐터) 그래프 객체 생성
 # fig = px.scatter(df, x="sepal_length", y="sepal_width", color="species")
 col_names = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-app = Dash(__name__) #Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
+app = Dash('dash_app') #Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
 # app layout: html과 dcc 모듈을 이용
 app.title = "콜백 Dash 연습"
 layout = html.Div(children=[ # 다중 파일 실행 시

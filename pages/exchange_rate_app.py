@@ -93,7 +93,7 @@ from dash.dash_table.Format import Format, Group # , type:'numeric', format:Form
 # fig.update_layout(yaxis_title=f"원화/{currency_name}"
 #                   , title_font_size=30, xaxis_title_font_size=20, yaxis_title_font_size=20)
 
-app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
+app = Dash('exchange_rate_app',external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
 #Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
 app.title = "환율 정보를 가져오는 웹 앱"
 # app layout: html과 dcc 모듈을 이용

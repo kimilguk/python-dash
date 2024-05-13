@@ -123,7 +123,7 @@ from dash.dash_table.Format import Format, Group # , type:'numeric', format:Form
 # BS = app.get_asset_url('bootstrap.min.css') # 노트북에서는 상대경로는 않된다. 대신 py파일이 있는 폴더에서 assets 이란 폴더를 생성한 후 css를 넣는다.
 # app.get_asset_url() 관련정보 https://dash.plotly.com/dash-enterprise/static-assets
 # 실행 결과 assets 폴더에 저장된 CSS는 위 함수 없이도 앱에서 자동으로 읽어 들인다.
-app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
+app = Dash('stock_info_app',external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
 #Dash클래스에 프로그램 이름 내장변수로 app 객체 생성.파이썬 파일이 메인 프로그램으로 사용될 때는 __main__ 이 기본값
 app.title = "주식 정보를 가져오는 웹 앱"
 # app layout: html과 dcc 모듈을 이용

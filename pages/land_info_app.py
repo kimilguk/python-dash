@@ -78,7 +78,7 @@ df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='%Y-%m
 # fig.update_layout(xaxis_title="날짜", yaxis_title="변화율(%)"
 #                   , title_font_size=30, xaxis_title_font_size=20, yaxis_title_font_size=20)
 
-app = Dash(__name__,external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
+app = Dash('land_info_app',external_stylesheets=[dbc.themes.BOOTSTRAP]) # __name__ 사용하지 않는 대신에 하단에 @callback 처럼 사용 dbc.themes.BOOTSTRAP
 app.title = "부동산 정보를 가져오는 웹 앱"
 # app.layout = html.Div([ # 단일 파일로 실행할 때
 layout = html.Div([ # 멀티 파일로 실행할 때
