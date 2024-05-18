@@ -1,3 +1,35 @@
+### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
+- 파이썬 버전 지정파일 추가 : runtime.txt python-3.8.16 (구름ide에서는 3.7.4였음.)
+- 외부패키지 버전 지정파일 추가 : requirements.txt (아래 내용)
+
+```
+dash==2.15.0
+yfinance==0.2.38
+dash_bootstrap_components==1.5.0
+feedparser==6.0.11
+matplotlib==3.3.2
+IPython==7.19.0
+```
+
+- 파이썬 버전이 올라가면서 아래 내용 2가지 수정됨.
+- exchange_rate_app.py(환율 데이터를 가져오는 웹 앱)
+- land_info_app.py(부동산 정보를 가져오는 웹 앱)
+- 위 2개의 파일에서 df.dtypes를 object에서 datetime형식으로 바꾸는 함수의 날짜 format 을 지정하는 방식 변경됨(아래 2개)
+
+```
+# exchange_rate_app.py(환율 데이터를 가져오는 웹 앱)
+# koyeb에서 에러나서 format변경
+# df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_format=True)
+```
+
+```
+# land_info_app.py(부동산 정보를 가져오는 웹 앱)
+# koyeb에서 에러나서 format변경
+# df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='%Y-%m')
+df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,infer_datetime_format=True)
+
+```
 ### 파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기
 #### 2023-03-15(수) 작업 : 파이썬 스케줄로 카카오 톡 메세지 보내기
 #### 2023-03-14(화) 작업 : 파이썬 코드로 카카오 톡 메세지 보내기
