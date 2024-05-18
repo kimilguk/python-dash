@@ -7,7 +7,7 @@ from pathlib import Path
 THIS_FOLDER = Path(__file__).parent.resolve()
 BS = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/styles/tomorrow-night-eighties.min.css"
 
-app = Dash('apps', external_stylesheets=[dbc.themes.BOOTSTRAP, BS], use_pages=True)
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, BS], use_pages=True)
 app.title = '파이썬 웹 스크래핑과 반응형 대시보드 앱 만들기'
 app.layout = html.Div(children=[
     html.H1(html.A('파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기', href="/",style={'color': 'blue', 'text-decoration': 'none'})),
