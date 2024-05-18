@@ -1,0 +1,6 @@
+dash==2.15.0
+yfinance==0.2.38
+dash_bootstrap_components==1.5.0
+feedparser==6.0.11
+matplotlib==3.3.2
+IPython==7.19.0
