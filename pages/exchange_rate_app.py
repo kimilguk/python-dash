@@ -58,9 +58,9 @@ df_exchange_rate2 = df_exchange_rate[::-1].reset_index(drop=True)
 # df_exchange_rate2의 index를 날짜 열의 데이터로 변경
 df_exchange_rate2 = df_exchange_rate2.set_index('날짜')
 # df_exchange_rate2의 index를 datetime 형식으로 변환
-print(df_exchange_rate2.index)
-df_exchange_rate2.index = df_exchange_rate2.index.replace('.', '-')
-print(df_exchange_rate2.index)
+print('여기1',df_exchange_rate2.index)
+#df_exchange_rate2.index = df_exchange_rate2.index.replace('.', '-')
+print('여기2',df_exchange_rate2)
 df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
 # 1) 환율 데이터 표시
 # display(df_exchange_rate.tail())  # 환율 데이터 표시(앞의 일부만 표시)
@@ -159,9 +159,6 @@ def func(n_clicks, my_dropdown_value):
         # df_exchange_rate2의 index를 날짜 열의 데이터로 변경
         df_exchange_rate2 = df_exchange_rate2.set_index('날짜')
         # df_exchange_rate2의 index를 datetime 형식으로 변환
-        print(df_exchange_rate2.index)
-        df_exchange_rate2.index = df_exchange_rate2.index.replace('.', '-')
-        print(df_exchange_rate2.index)
         df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
     changed_id = [p['prop_id'] for p in callback_context.triggered][0] # 클릭,상태변경 이벤트 확인용 변수
     if 'btn-download' in changed_id:
@@ -193,9 +190,6 @@ def update_output(my_dropdown_value):
         # df_exchange_rate2의 index를 날짜 열의 데이터로 변경
         df_exchange_rate2 = df_exchange_rate2.set_index('날짜')
         # df_exchange_rate2의 index를 datetime 형식으로 변환
-        print(df_exchange_rate2.index)
-        df_exchange_rate2.index = df_exchange_rate2.index.replace('.', '-')
-        print(df_exchange_rate2.index)
         df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
         fig = px.line(df_exchange_rate2['매매기준율'], title="환율(매매기준율) 그래프", labels={"variable": "분류"}) # 단일 값 출력
         fig.update_layout(yaxis_title=f"원화/{my_dropdown_value}"
