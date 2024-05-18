@@ -18,12 +18,11 @@ import feedparser
 # RSS 피드 제공 일시를 한국 날짜와 시간으로 변경하는 함수
 def get_local_datetime(rss_datetime):    
     # 전체 값 중에서 날짜와 시간만 문자열로 추출 
-    #date_time_str = ' '.join(rss_datetime.split()[1:5])
+    date_time_str = ' '.join(rss_datetime.split()[1:5])
     # 문자열의 각 자리에 의미를 부여해 datetime 객체로 변경 
-    #date_time_GMT = datetime.strptime(date_time_str, '%d %b %Y %H:%M:%S') 
+    date_time_GMT = datetime.strptime(date_time_str, '%d %b %Y %H:%M:%S') 
     # GMT에 9시간을 더해 한국 시간대로 변경
-    #date_time_KST = date_time_GMT + timedelta(hours=9) 
-    date_time_KST = rss_datetime
+    date_time_KST = date_time_GMT + timedelta(hours=9) 
     return date_time_KST # 변경된 시간대의 날짜와 시각 반환 
 #---------------------------------------------------------
 
