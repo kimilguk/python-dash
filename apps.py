@@ -89,4 +89,4 @@ def update_output(pathname):
     return ''
 
 if __name__ == '__main__': #파이썬 파일이 메인 프로그램으로 사용될 때와 모듈로 사용될 때를 구분하기 위한 용도
-    app.run_server(debug=False, host='0.0.0.0', port=8888)
+    app.run_server(debug=False, host='0.0.0.0', port=8050)
