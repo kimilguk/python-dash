@@ -61,7 +61,7 @@ df_exchange_rate2 = df_exchange_rate2.set_index('날짜')
 print('여기1',df_exchange_rate2.index)
 #df_exchange_rate2.index = df_exchange_rate2.index.replace('.', '-')
 print('여기2',df_exchange_rate2)
-#df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_format=True)
 # 1) 환율 데이터 표시
 # display(df_exchange_rate.tail())  # 환율 데이터 표시(앞의 일부만 표시)
 # display(df_exchange_rate2.head())  # 환율 데이터 표시(앞의 일부만 표시)
