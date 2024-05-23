@@ -1,0 +1,6 @@
+#%%writefile  /workspace/python-dash/notebooks/data/read_test.txt 절대경로
+#%%writefile C:\myPyScraping\data\ch04\read_test.txt 윈도우 경로
+All grown-up
+were once children,
+although few of them
+remember it.

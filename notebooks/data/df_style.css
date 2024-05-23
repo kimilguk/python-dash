@@ -1,0 +1,9 @@
+
+table { 
+    width: 100%;
+}
+th:first-child { width: 2px; }
+td {
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
