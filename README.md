@@ -1,3 +1,6 @@
+### 작업PC에서 VS Code에서 노트북 기능 사용하게 pip 모듈 추가
+- pip install ipykernel (당연히 VS Code 플러그인으로 Python 을 추가한 상태에서 설치해야 한다.)
+
 ### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
 - 파이썬 버전 지정파일 추가 : runtime.txt python-3.8.16 (구름ide에서는 3.7.4였음.)
 - 외부패키지 버전 지정파일 추가 : requirements.txt (아래 내용)
@@ -30,6 +33,10 @@ df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_
 df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,infer_datetime_format=True)
 
 ```
+
+### 구름ide용으로 pages폴더내의 ~_app.py파일의 name 대신 사용한 부분 변경(아래)
+- app = Dash('name',...) 부분을 app = Dash('파일명',...)으로
+
 ### 파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기
 #### 2023-03-15(수) 작업 : 파이썬 스케줄로 카카오 톡 메세지 보내기
 #### 2023-03-14(화) 작업 : 파이썬 코드로 카카오 톡 메세지 보내기
