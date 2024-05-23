@@ -1,5 +1,7 @@
 ### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
 - 파이썬 버전 지정파일 추가 : runtime.txt python-3.8.16 (구름ide에서는 3.7.4였음.)
+- 웹에서 소스코드 버튼을 사용할 때 'cp949' codec can't decode byte...에러 처리(아래)
+- with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='UTF-8') //,encoding='UTF-8'추가
 - 외부패키지 버전 지정파일 추가 : requirements.txt (아래 내용)
 
 ```

@@ -59,7 +59,7 @@ def display_source(pathname):
         if pathname == page["path"]:
             if pathname == '/':
                 pathname = '/dash_app'
-            with open(f'{THIS_FOLDER}/pages{pathname}.py') as file_data:
+            with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='UTF-8') as file_data:
                 # 기본적으로 사용하는 함수를  with문 안에 사용하면 되며
                 # with문을 나올 때 close를 자동으로 불러줍니다.
                 source = file_data.read()
