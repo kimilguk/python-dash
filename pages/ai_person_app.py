@@ -1,13 +1,4 @@
 #-*- coding:utf-8 -*-
-import dash # 멀티 파일로 실행 할 때 위 아래 줄 주석 해제
-dash.register_page(
-    __name__,
-    title='사람속성 검출 AI를 사용한 웹 앱',
-    path='/ai_person_app',
-    description='사람속성 검출 AI를 사용한 웹 앱',
-    css_key='btn-primary'
-)
-
 import urllib3
 import json
 import base64
@@ -87,6 +78,16 @@ html_table = df_person_html.to_html(index=False, escape=False) # 데이터프레
 #####################################################################
 
 # 대시보드 앱 시작(아래)
+import dash
+# 단일 파일로 실행 할 때 아래 멀티 dash페이지등록 부분 7줄코드 주석처리 후 제일 하단 app.run_server 코드는 주석해제
+dash.register_page(
+    __name__,
+    title='사람속성 검출 AI를 사용한 웹 앱',
+    path='/ai_person_app',
+    description='사람속성 검출 AI를 사용한 웹 앱',
+    css_key='btn-primary'
+)
+
 from dash import Dash, dcc, Input, Output, callback, callback_context, dash_table, State, html
 import dash_bootstrap_components as dbc # 부트 스트랩 디자인 사용
 from dash.dash_table.Format import Format, Group # , type:'numeric', format:Format(group=True, groups=[4])
