@@ -23,6 +23,9 @@ IPython==7.19.0
 # koyeb에서 에러나서 format변경
 # df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
 df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_format=True)
+# infer_datetime_format 함수가 deprecated 되어서 더이상 사용되지 않을 예정이라서 format속성으로 대체한다.(아래)
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='mixed')
+- 위 처리 관련정보 : https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html
 ```
 
 ```

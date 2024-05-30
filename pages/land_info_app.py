@@ -75,7 +75,7 @@ from dash.dash_table.Format import Format, Group # , type:'numeric', format:Form
 df_rates_for_chart = df_rates_for_chart.set_index('등록일')
 # koyeb에서 에러나서 format변경
 # df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='%Y-%m')
-df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,infer_datetime_format=True)
+df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='mixed')
 # fig = px.line(df_rates_for_chart[selected_regions], title="아파트의 매매가 변화율", labels={"variable": "분류"}) # 단일 값 출력
 # fig.update_layout(xaxis_title="날짜", yaxis_title="변화율(%)"
 #                   , title_font_size=30, xaxis_title_font_size=20, yaxis_title_font_size=20)
