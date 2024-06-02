@@ -15,10 +15,16 @@ def get_api(query):
     # imageFilePath = "./boardwalk.jpg"
     # type = "jpg"
     #-------------
-
-    file = open(imageFilePath, "rb")
-    imageContents = base64.b64encode(file.read()).decode("utf8")
-    file.close()
+    from PIL import Image
+    imageContents = None
+    #if isinstance(imageFilePath, str):
+    if len(imageFilePath)>100:
+        content_type, content_string = imageFilePath.split(',')
+        imageContents = content_string
+    else:
+        file = open(imageFilePath, "rb")
+        imageContents = base64.b64encode(file.read()).decode("utf8")
+        file.close()
 
     requestJson = {
         "argument": {
@@ -151,14 +157,80 @@ layout = dbc.Container([ # 멀티 파일로 실행 할 때
     html.Div([
         dcc.Loading(id="loading-6", type="circle", children=html.Div(id="loading-output-6")),
     ],style={'position':'fixed','left':'50%','top':'50%','z-index':'9999'}),
+    dcc.Upload(
+        id='upload-image',
+        children=html.Div([
+            html.Button('Upload File 선택'),
+            '여기를 [Click] 하여 여러분 PC의 이미지 파일을 선택하거나 또는 ',
+            html.A('Drag and Drop 하면 사람의 특징을 검출 할 수 있습니다.(아래)')
+        ]),
+        style={
+            'width': '100%',
+            'height': '60px',
+            'lineHeight': '50px',
+            'borderWidth': '1px',
+            'borderStyle': 'dashed',
+            'borderRadius': '5px',
+            'textAlign': 'center',
+            'margin': '10px'
+        },
+        # Allow multiple files to be uploaded
+        multiple=True
+    ),
+    html.Div(id='output-image-upload'),
+    dash_table.DataTable( # 스타일 참조: https://dash.plotly.com/datatable/style
+        columns=[
+        {'id': i, "name": i, 'presentation': 'markdown'} for i in df_person.columns], # , 'presentation': 'markdown'
+        id='tbl7',
+        data=None,
+        style_header={'textAlign': 'center'},
+        style_cell={'textAlign': 'left'},
+    ),
+    html.Div(children=[
+            dcc.Markdown(None, dangerously_allow_html=True, id="html_table7")
+    ]),
+    html.Div([
+        dcc.Loading(id="loading-7", type="circle", children=html.Div(id="loading-output-7")),
+    ],style={'position':'fixed','left':'50%','top':'50%','z-index':'9999'}),
 ])
+# 로컬 PC의 이미지를 불러와서 검출(아래)
+def parse_contents(contents, filename):
+    return html.Div([
+        html.H5(filename),
+        html.Img(src=contents, height=200),
+        html.Hr(),
+        html.Div('Raw Content'),
+        html.Pre(contents[0:200] + '...', style={
+            'whiteSpace': 'pre-wrap',
+            'wordBreak': 'break-all'
+        })
+    ])
+@callback([
+    Output('output-image-upload', 'children'),Output('tbl7','data'),Output('html_table7','children'),Output("loading-output-7","children")
+    ],
+    Input('upload-image', 'contents'),
+    [State('upload-image', 'filename'),State('tbl7', 'data'),] # 기존 값 가져오기
+)
+def update_output(list_of_contents, list_of_names, data): # Input 이벤트와 State 상태변화가 밠행할 때 이 콜백함수 실행
+    if list_of_contents is not None:
+        children = [
+            parse_contents(c, n) for c, n in
+            zip(list_of_contents, list_of_names)]
+        #print(type(list_of_contents[0]))
+        #exit() # 디버그
+        value = list_of_contents[0]
+        [df_person, html_table] = get_api(value)
+        data=df_person.to_dict("records")
+        return children, data, html_table, ''
+
+# 서버 assets 폴더의 이미지를 불러와서 검출(아래)
 @callback (
     [Output('tbl6','data'),Output('errors6','children'),Output('html_table','children'),Output("loading-output-6","children")],
     [Input('img-picker','value'),Input("btn_search6", "n_clicks")],
     [State('tbl6', 'data')], # 기존 값 가져오기
 #     prevent_initial_call=True, # 페이지 로드 시 콜백이 실행되지 않도록 
 )
-def update_table(value, n_clicks, data):
+def update_table(value, n_clicks, data): # Input 이벤트와 State 상태변화가 밠행할 때 이 콜백함수 실행
     changed_id = [p['prop_id'] for p in callback_context.triggered][0] # 클릭,상태변경 이벤트 확인용 변수
     if 'img-picker' in changed_id:
         raise PreventUpdate
