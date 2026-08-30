@@ -21,7 +21,7 @@ from io import BytesIO
 #----------------------------------------
 def get_stock_info(maket_type=None):
     # 한국거래소(KRX)에서 전체 상장법인 목록 가져오기
-    base_url =  "http://kind.krx.co.kr/corpgeneral/corpList.do"
+    base_url =  "https://kind.krx.co.kr/corpgeneral/corpList.do"
     method = "download"
     if maket_type == 'kospi':
         marketType = "stockMkt"  # 주식 종목이 코스피인 경우
@@ -31,10 +31,10 @@ def get_stock_info(maket_type=None):
         marketType = ""
     url = "{0}?method={1}&marketType={2}".format(base_url, method, marketType)
 
-    df = pd.read_html(url, header=0)[0]
+    df = pd.read_html(url, header=0, encoding='cp949')[0]
     
     # 종목코드 열을 6자리 숫자로 표시된 문자열로 변환
-    df['종목코드']= df['종목코드'].apply(lambda x: f"{x:06d}")
+    df['종목코드']= df['종목코드'].apply(lambda x: f"{x}")
     
     # 회사명과 종목코드 열 데이터만 남김
     df = df[['회사명','종목코드']]

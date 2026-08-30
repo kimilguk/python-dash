@@ -1,7 +1,8 @@
-### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
-- 파이썬 버전 지정파일 추가 : runtime.txt python-3.8.16 (구름ide에서는 3.7.4였음.)
+### 2026-08-30(일) 작업 : 파이썬 버전올리면서 작업한 내역(아래) 
+#### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
+- 파이썬 버전 지정파일 추가 : runtime.txt python-3.13.15 (이전에는 3.8.16였음.)
 - 웹에서 소스코드 버튼을 사용할 때 'cp949' codec can't decode byte...에러 처리(아래)
-- with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='UTF-8') //,encoding='UTF-8'추가
+- with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='cp949') //,encoding='UTF-8'에서 cp949로 변경
 - 외부패키지 버전 지정파일 추가 : requirements.txt (아래 내용)
 
 ```
@@ -9,7 +10,7 @@ dash==2.15.0
 yfinance==0.2.38
 dash_bootstrap_components==1.5.0
 feedparser==6.0.11
-matplotlib==3.3.2
+matplotlib>=3.3.2
 IPython==7.19.0
 ```
 
@@ -22,7 +23,7 @@ IPython==7.19.0
 # exchange_rate_app.py(환율 데이터를 가져오는 웹 앱)
 # koyeb에서 에러나서 format변경
 # df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
-df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_format=True)
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,,format='mixed')
 # infer_datetime_format 함수가 deprecated 되어서 더이상 사용되지 않을 예정이라서 format속성으로 대체한다.(아래)
 df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='mixed')
 - 위 처리 관련정보 : https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html
@@ -32,7 +33,7 @@ df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='mixed')
 # land_info_app.py(부동산 정보를 가져오는 웹 앱)
 # koyeb에서 에러나서 format변경
 # df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='%Y-%m')
-df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,infer_datetime_format=True)
+df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='mixed')
 
 ```
 - koyeb 배포에서는 노트북 폴더 내용은 지우고, 앱 내묭만 배포한다.

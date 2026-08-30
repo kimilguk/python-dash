@@ -26,7 +26,7 @@ def get_exchange_rate_data(currency_code, last_page_num):
     
     for page_num in range(1, last_page_num+1):
         url = f"{base_url}?marketindexCd={currency_code}&page={page_num}"
-        dfs = pd.read_html(url, header=1)
+        dfs = pd.read_html(url, header=1, encoding='cp949')
         
         # 통화 코드가 잘못 지정됐거나 마지막 페이지의 경우 for 문을 빠져나옴
         if dfs[0].empty:
