@@ -8,6 +8,7 @@ THIS_FOLDER = Path(__file__).parent.resolve()
 BS = "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.13.1/build/styles/tomorrow-night-eighties.min.css"
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, BS], use_pages=True)
+server = app.server  # Gunicorn이 인식할 수 있도록 Flask 서버 노출
 app.title = '파이썬 웹 스크래핑과 반응형 대시보드 앱 만들기'
 app.layout = html.Div(children=[
     html.H1(html.A('파이썬 웹 스크레핑과 반응형 대시보드 앱 만들기', href="/",style={'color': 'blue', 'text-decoration': 'none'})),
@@ -59,7 +60,7 @@ def display_source(pathname):
         if pathname == page["path"]:
             if pathname == '/':
                 pathname = '/dash_app'
-            with open(f'{THIS_FOLDER}/pages{pathname}.py') as file_data:
+            with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='UTF-8') as file_data:
                 # 기본적으로 사용하는 함수를  with문 안에 사용하면 되며
                 # with문을 나올 때 close를 자동으로 불러줍니다.
                 source = file_data.read()
@@ -89,4 +90,7 @@ def update_output(pathname):
     return ''
 
 if __name__ == '__main__': #파이썬 파일이 메인 프로그램으로 사용될 때와 모듈로 사용될 때를 구분하기 위한 용도
-    app.run_server(debug=False, host='0.0.0.0', port=8888)
+    # Koyeb 환경 변수 PORT를 가져오고, 없으면 기본값 8000 사용
+    port = int(os.environ.get('PORT', 8888))
+    app.run_server(host='0.0.0.0', port=port, debug=False)
+    # app.run_server(debug=False, host='0.0.0.0', port=8888)
