@@ -90,4 +90,7 @@ def update_output(pathname):
     return ''
 
 if __name__ == '__main__': #파이썬 파일이 메인 프로그램으로 사용될 때와 모듈로 사용될 때를 구분하기 위한 용도
-    app.run_server(debug=False, host='0.0.0.0', port=8888)
+    # Koyeb 환경 변수 PORT를 가져오고, 없으면 기본값 8000 사용
+    port = int(os.environ.get('PORT', 8000))
+    app.run_server(host='0.0.0.0', port=port, debug=False)
+    # app.run_server(debug=False, host='0.0.0.0', port=8888)
