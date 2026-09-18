@@ -1,8 +1,8 @@
-### 작업PC에서 VS Code에서 노트북 기능 사용하게 pip 모듈 추가
-- pip install ipykernel (당연히 VS Code 플러그인으로 Python 을 추가한 상태에서 설치해야 한다.)
-
-### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
-- 파이썬 버전 지정파일 추가 : runtime.txt python-3.8.16 (구름ide에서는 3.7.4였음.)
+### 2026-08-30(일) 작업 : 파이썬 버전올리면서 작업한 내역(아래) 
+#### koyeb 플랫폼에 배포하면서, 추가하고, 수정한 내용정리
+- 파이썬 버전 지정파일 추가 : runtime.txt python-3.13.15 (이전에는 3.8.16였음.)
+- 웹에서 소스코드 버튼을 사용할 때 'cp949' codec can't decode byte...에러 처리(아래)
+- with open(f'{THIS_FOLDER}/pages{pathname}.py',encoding='cp949') //,encoding='UTF-8'에서 cp949로 변경
 - 외부패키지 버전 지정파일 추가 : requirements.txt (아래 내용)
 
 ```
@@ -10,7 +10,7 @@ dash==2.15.0
 yfinance==0.2.38
 dash_bootstrap_components==1.5.0
 feedparser==6.0.11
-matplotlib==3.3.2
+matplotlib>=3.3.2
 IPython==7.19.0
 ```
 
@@ -23,16 +23,20 @@ IPython==7.19.0
 # exchange_rate_app.py(환율 데이터를 가져오는 웹 앱)
 # koyeb에서 에러나서 format변경
 # df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='%Y-%m-%d')
-df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,infer_datetime_format=True)
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,,format='mixed')
+# infer_datetime_format 함수가 deprecated 되어서 더이상 사용되지 않을 예정이라서 format속성으로 대체한다.(아래)
+df_exchange_rate2.index = pd.to_datetime(df_exchange_rate2.index,format='mixed')
+- 위 처리 관련정보 : https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html
 ```
 
 ```
 # land_info_app.py(부동산 정보를 가져오는 웹 앱)
 # koyeb에서 에러나서 format변경
 # df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='%Y-%m')
-df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,infer_datetime_format=True)
+df_rates_for_chart.index = pd.to_datetime(df_rates_for_chart.index,format='mixed')
 
 ```
+- koyeb 배포에서는 노트북 폴더 내용은 지우고, 앱 내묭만 배포한다.
 
 ### 구름ide용으로 pages폴더내의 ~_app.py파일의 name 대신 사용한 부분 변경(아래)
 - app = Dash('name',...) 부분을 app = Dash('파일명',...)으로
